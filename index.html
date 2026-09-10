@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bartan Turn 🍽️</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <h1>बर्तन <span>ट्रैकर</span></h1>
+      <p class="tagline">jiski baari, uski zimmedari.</p>
+    </header>
+
+    <section class="card" id="turn-card">
+      <p class="eyebrow" id="today-label">today</p>
+      <h2 class="name" id="today-name">—</h2>
+      <p class="sub">is on duty 🍽️</p>
+      <button id="skip-btn" class="skip-btn">nahi kar sakta aaj? skip →</button>
+      <p class="skip-note" id="skip-note"></p>
+    </section>
+
+    <section class="queue-section">
+      <p class="section-title">order</p>
+      <ol class="queue" id="queue-list"></ol>
+    </section>
+
+    <section class="history-section">
+      <button class="history-toggle" id="history-toggle">skip history ▾</button>
+      <ul class="history" id="history-list" hidden></ul>
+    </section>
+
+    <footer class="foot">
+      <p id="status-line">connecting…</p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
