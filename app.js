@@ -26,7 +26,7 @@ const el = {
   queueList: document.getElementById("queue-list"),
   historyToggle: document.getElementById("history-toggle"),
   historyList: document.getElementById("history-list"),
-  statusLine: document.getElementById("status-line"),
+  statusLine: document.getElementById("status-text"),
 };
 
 function todayStr() {
@@ -128,16 +128,18 @@ function renderPointer(data) {
   el.todayName.textContent = NAMES[index];
 
   el.queueList.innerHTML = "";
-  NAMES.forEach((_, i) => {
-    const pos = (i - index + NAMES.length) % NAMES.length;
+  for (let pos = 1; pos < NAMES.length; pos++) {
     const person = NAMES[(index + pos) % NAMES.length];
+    const when = pos === 1 ? "tomorrow" : formatShortDate(addDays(todayStr(), pos));
     const li = document.createElement("li");
-    if (pos === 0) li.classList.add("current");
-    li.innerHTML = `<span>${person}</span><span class="pos">${
-      pos === 0 ? "today" : `+${pos}d`
-    }</span>`;
+    li.innerHTML = `<span class="who">${person}</span><span class="when">${when}</span>`;
     el.queueList.appendChild(li);
-  });
+  }
+}
+
+function formatShortDate(dateStr) {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", { day: "numeric", month: "short" }).toLowerCase();
 }
 
 function renderHistory(docs) {
