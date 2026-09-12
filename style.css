@@ -68,7 +68,7 @@ body::before {
   color: var(--text);
 }
 
-.top h1 span {
+.top h1 #brand-accent {
   display: inline-block;
   color: var(--text);
   background: var(--pink);

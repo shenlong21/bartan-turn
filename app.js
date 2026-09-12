@@ -1,4 +1,4 @@
-import { firebaseConfig, NAMES } from "./config.js";
+import { firebaseConfig, NAMES, BRANDING } from "./config.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import {
   getFirestore,
@@ -13,6 +13,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 const MAX_CATCHUP_DAYS = 90; // safety cap so a long-dormant app doesn't blow up a transaction
+
+// Branding is independent of Firebase — apply it first so the page looks
+// right even if the config below is broken or still unset.
+document.title = BRANDING.title;
+document.getElementById("brand-main").textContent = BRANDING.headerMain;
+document.getElementById("brand-accent").textContent = BRANDING.headerAccent;
+document.getElementById("tagline").textContent = BRANDING.tagline;
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

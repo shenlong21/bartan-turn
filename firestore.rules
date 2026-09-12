@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The single shared pointer doc: { index, date }. Anyone can read or
+    // write it — there's no login — but writes must match this exact shape,
+    // so a stray client can't corrupt it into something the app can't parse.
+    match /state/pointer {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(['index', 'date'])
+                   && request.resource.data.index is int
+                   && request.resource.data.date is string;
+    }
+
+    // One doc per (date, person) skip, id'd as "{date}_{person}" by the app.
+    // Deliberately create-only, never update or delete — skip history is a
+    // append-only log, not something a client should be able to rewrite
+    // after the fact. (app.js checks doc existence before writing, so
+    // re-skipping the same person on the same day is a silent no-op rather
+    // than a rejected write.)
+    match /skips/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['date', 'person', 'ts']);
+    }
+  }
+}

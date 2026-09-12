@@ -11,3 +11,13 @@ export const firebaseConfig = {
 
 // Flatmates, in a fixed rotation order. Edit names/order here.
 export const NAMES = ["Sachin", "Yeshu", "Bishal", "Haddi", "Jayla"];
+
+// Site branding. This template isn't tied to dishwashing specifically —
+// change these to repurpose it for any recurring shared duty (trash,
+// grocery runs, watering plants, whatever rotates in your house).
+export const BRANDING = {
+  title: "Bartan Turn 🍽️",
+  headerMain: "बर्तन",
+  headerAccent: "ट्रैकर",
+  tagline: "jiski baari, uski zimmedari.",
+};
