@@ -90,7 +90,7 @@ body::before {
 
 .dial-art {
   position: absolute;
-  bottom: -60px;
+  bottom: 0;
   right: -60px;
   width: 560px;
   max-width: none;
@@ -101,6 +101,14 @@ body::before {
 
 .dial-art {
   perspective: 1000px;
+}
+
+/* percentage translateY (relative to the svg's own rendered height) so this
+   scales consistently whether dial-art is 560px (desktop) or 280px
+   (mobile), instead of a fixed px offset that would look wrong at one
+   size or the other. */
+.plate-shift {
+  transform: translateY(28%);
 }
 
 .dial-art svg {
@@ -151,7 +159,7 @@ body::before {
   width: 59%;
   aspect-ratio: auto;
   height: 93%;
-  top: 52%;
+  top: 78%;
   transform: translate(-50%, -100%);
 }
 
@@ -407,15 +415,26 @@ body::before {
   .stage {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 36px;
-    padding: 32px 20px 60px;
+    align-items: stretch;
+    padding: 0;
     height: auto;
     overflow: visible;
   }
 
+  /* Hard height:100vh (not min-height) so margin-top:auto below has real
+     free space to absorb — the actual "opening screen." queue-rail lives
+     outside this element entirely, so it can only ever start after it. */
+  .opening-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    height: 100vh;
+    padding: 32px 20px;
+    overflow: visible;
+  }
+
   .top,
-  .queue-rail,
   .hero {
     position: static;
     transform: none;
@@ -430,9 +449,12 @@ body::before {
   .hero { order: 1; }
   .dial-art {
     /* stays position:relative (not static) so .avatar-mount's absolute
-       positioning still resolves against it, not against .stage. */
+       positioning still resolves against it, not against .stage.
+       margin-top:auto pushes it to the very bottom of the 100vh opening
+       screen. */
     position: relative;
     order: 2;
+    margin-top: auto;
     left: auto;
     top: auto;
     right: auto;
@@ -443,7 +465,16 @@ body::before {
     opacity: 1;
     pointer-events: auto;
   }
-  .queue-rail { order: 3; align-self: stretch; }
+
+  .queue-rail {
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    padding: 40px 20px 0;
+  }
 
   .queue {
     align-items: center;
@@ -453,11 +484,9 @@ body::before {
     font-size: clamp(48px, 18vw, 90px);
   }
 
-  /* smaller than desktop — .dial-art sits tightly between flex siblings
-     here, not a spacious stage, so the figure can't overflow upward as
-     far without overlapping the "skip" line above it. */
+  /* ~2x the original mobile size. */
   .avatar-mount.has-model {
-    width: 36%;
-    height: 58%;
+    width: 70%;
+    height: 112%;
   }
 }

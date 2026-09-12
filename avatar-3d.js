@@ -198,13 +198,27 @@ if (!canvas) {
         const morphMesh = findMorphMesh(currentModel);
         startAnimations(morphMesh);
 
-        canvas.hidden = false;
-        initialLabel.hidden = true;
+        // WebGL compiles a model's shaders lazily, on the first frame that
+        // actually rasterizes a visible pixel of it. Since the figure starts
+        // sunk fully out of the camera frustum, that "first pixel" moment
+        // would otherwise land mid-rise, causing a visible compile-stall
+        // stutter right when it matters most. Force a render here, at the
+        // full resting pose (fully in view) while the canvas is still
+        // hidden from the user, to eat that compile cost silently.
+        renderer.render(scene, camera);
 
         // Sink the figure below the plate now, but don't pop it up until the
         // plate has fully finished its own rotation — never before.
         const restY = currentModel.position.y;
         currentModel.position.y = restY - bodyHeight * 1.6;
+
+        // Render again so the canvas's pixel buffer reflects the sunk
+        // (out-of-frame) pose *before* we reveal it — otherwise the first
+        // thing shown would briefly be the warm-up render's resting pose.
+        renderer.render(scene, camera);
+
+        canvas.hidden = false;
+        initialLabel.hidden = true;
 
         const pop = () => {
           // The avatar itself never rotates/tilts — only the plate does.

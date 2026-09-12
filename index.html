@@ -14,12 +14,22 @@
 </head>
 <body>
   <main class="stage">
-    <header class="top">
-      <h1>बर्तन <span>ट्रैकर</span></h1>
-      <p class="tagline">jiski baari, uski zimmedari.</p>
-    </header>
+    <!-- On mobile this becomes a hard height:100vh block (see media query)
+         so the queue list below it is guaranteed to start only once you
+         scroll past it — on desktop it's just a plain non-positioned
+         wrapper, invisible to the existing position:absolute children. -->
+    <div class="opening-screen">
+      <header class="top">
+        <h1>बर्तन <span>ट्रैकर</span></h1>
+        <p class="tagline">jiski baari, uski zimmedari.</p>
+      </header>
 
-    <div class="dial-art" aria-hidden="true">
+      <div class="dial-art" aria-hidden="true">
+      <!-- static downward shift so the plate sits below the avatar's feet
+           instead of intersecting its legs; kept on this wrapper (not the
+           svg itself) since anime.js's rotateX tween on the svg would
+           otherwise silently drop any transform it doesn't itself track. -->
+      <div class="plate-shift">
       <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
@@ -83,6 +93,7 @@
         <g id="bars"></g>
         <g id="dots"></g>
       </svg>
+      </div>
 
       <!-- avatar of today's person, floating in the center of the plate.
            Separate HTML layer (not SVG) so it gets its own nested 3D spin
@@ -97,18 +108,19 @@
           </div>
         </div>
       </div>
+      </div>
+
+      <section class="hero" id="turn-card">
+        <p class="eyebrow" id="today-label">today</p>
+        <h2 class="name" id="today-name">—</h2>
+        <button id="skip-btn" class="skip-link">skip →</button>
+        <p class="skip-note" id="skip-note"></p>
+      </section>
     </div>
 
     <aside class="queue-rail">
       <ol class="queue" id="queue-list"></ol>
     </aside>
-
-    <section class="hero" id="turn-card">
-      <p class="eyebrow" id="today-label">today</p>
-      <h2 class="name" id="today-name">—</h2>
-      <button id="skip-btn" class="skip-link">skip →</button>
-      <p class="skip-note" id="skip-note"></p>
-    </section>
   </main>
 
   <footer class="foot">
