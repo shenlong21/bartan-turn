@@ -24,6 +24,7 @@ const el = {
   skipBtn: document.getElementById("skip-btn"),
   skipNote: document.getElementById("skip-note"),
   queueList: document.getElementById("queue-list"),
+  avatarInitial: document.getElementById("avatar-initial"),
   historyToggle: document.getElementById("history-toggle"),
   historyList: document.getElementById("history-list"),
   statusLine: document.getElementById("status-text"),
@@ -126,6 +127,7 @@ function renderPointer(data) {
     day: "numeric",
   });
   el.todayName.textContent = NAMES[index];
+  setAvatar(NAMES[index]);
 
   el.queueList.innerHTML = "";
   for (let pos = 1; pos < NAMES.length; pos++) {
@@ -135,6 +137,17 @@ function renderPointer(data) {
     li.innerHTML = `<span class="who">${person}</span><span class="when">${when}</span>`;
     el.queueList.appendChild(li);
   }
+}
+
+// Shows a real 3D model at avatars/<name>.glb if one exists (avatar-3d.js
+// handles the actual loading/rendering), falling back to the person's
+// initial letter otherwise (no models are provided for most flatmates yet).
+function setAvatar(name) {
+  el.avatarInitial.textContent = name[0];
+  // avatar-3d.js loads three.js from a CDN before it can define this, so it
+  // may not exist yet — stash the name and let it pick up on startup.
+  window.__todayAvatarName = name;
+  if (window.setTodayAvatar) window.setTodayAvatar(name);
 }
 
 function formatShortDate(dateStr) {

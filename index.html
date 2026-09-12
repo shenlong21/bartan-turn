@@ -19,96 +19,84 @@
       <p class="tagline">jiski baari, uski zimmedari.</p>
     </header>
 
-    <div class="sink-art" aria-hidden="true">
-      <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
-        <!-- ground -->
-        <line x1="0" y1="200" x2="320" y2="200" stroke="var(--line)" stroke-width="1" />
-        <ellipse cx="205" cy="201" rx="58" ry="6" fill="#000" opacity="0.25" />
+    <div class="dial-art" aria-hidden="true">
+      <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="3.2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-        <!-- counter + sink -->
-        <rect x="0" y="150" width="175" height="50" fill="var(--counter)" />
-        <rect x="0" y="139" width="175" height="13" rx="2" fill="var(--counter-top)" />
-        <ellipse cx="108" cy="144" rx="38" ry="9" fill="var(--basin)" />
-        <ellipse cx="108" cy="144" rx="30" ry="6" fill="var(--teal)" opacity="0.35" />
+        <!-- rotating tick rings -->
+        <circle class="tick-ring ring-1" cx="200" cy="200" r="172" fill="none" stroke="var(--pink)" stroke-width="2" stroke-dasharray="2 7" opacity="0.5" style="transform-origin: 200px 200px;" />
+        <circle class="tick-ring ring-2" cx="200" cy="200" r="152" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-dasharray="1 5" opacity="0.4" style="transform-origin: 200px 200px;" />
+        <circle class="tick-ring ring-3" cx="200" cy="200" r="132" fill="none" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="7 4" opacity="0.35" style="transform-origin: 200px 200px;" />
 
-        <!-- faucet -->
-        <path d="M50 139 C 50 96, 62 80, 84 80 C 100 80, 106 88, 106 102"
-          stroke="var(--porcelain)" stroke-width="4" stroke-linecap="round" fill="none" />
-        <circle cx="106" cy="104" r="3" fill="var(--porcelain)" />
+        <!-- segmented glow arc, one quarter per accent color, slowly orbiting as a group -->
+        <g class="arc-group" style="transform-origin: 200px 200px;">
+          <circle class="arc" cx="200" cy="200" r="172" fill="none" stroke="var(--pink)" stroke-width="4"
+            stroke-linecap="round" pathLength="100" stroke-dasharray="20 80" transform="rotate(-45 200 200)" filter="url(#glow)" />
+          <circle class="arc" cx="200" cy="200" r="172" fill="none" stroke="var(--teal)" stroke-width="4"
+            stroke-linecap="round" pathLength="100" stroke-dasharray="20 80" transform="rotate(45 200 200)" filter="url(#glow)" />
+          <circle class="arc" cx="200" cy="200" r="172" fill="none" stroke="var(--purple)" stroke-width="4"
+            stroke-linecap="round" pathLength="100" stroke-dasharray="20 80" transform="rotate(135 200 200)" filter="url(#glow)" />
+          <circle class="arc" cx="200" cy="200" r="172" fill="none" stroke="var(--amber)" stroke-width="4"
+            stroke-linecap="round" pathLength="100" stroke-dasharray="20 80" transform="rotate(225 200 200)" filter="url(#glow)" />
+        </g>
 
-        <!-- plate soaking -->
-        <ellipse cx="105" cy="146" rx="19" ry="5" fill="var(--porcelain)" opacity="0.92" />
-        <ellipse cx="105" cy="146" rx="19" ry="5" fill="none" stroke="var(--counter)" stroke-width="1.3" />
-
-        <!-- ===== spidey, standing, side profile, facing the sink (left) ===== -->
-        <g class="person-bob">
-
-          <!-- back leg (suit blue) -->
-          <path d="M208 150 C 206 164, 206 178, 208 194 L 222 194 C 221 178, 220 164, 222 150 Z" fill="var(--suit-blue-dark)" />
-          <path d="M208 194 h14 l4 8 h-26 z" fill="var(--suit-red-dark)" />
-
-          <!-- front leg (slight forward bend, washing stance) -->
-          <path d="M188 150 C 184 162, 180 170, 172 178 C 170 186, 172 192, 176 196 L 190 196 C 189 186, 190 176, 194 168 C 196 160, 196 154, 194 150 Z" fill="var(--suit-blue)" />
-          <path d="M176 196 h14 l4 8 h-26 z" fill="var(--suit-red)" />
-          <!-- web lines on legs -->
-          <path d="M188 155 C 184 163, 180 169, 175 176 M195 158 C 192 168, 192 180, 194 190 M182 165 L200 162 M178 182 L196 180" stroke="var(--web)" stroke-width="1" fill="none" opacity="0.55" />
-          <path d="M212 156 C 210 166, 210 178, 212 190 M216 160 L226 159" stroke="var(--web)" stroke-width="1" fill="none" opacity="0.5" />
-
-          <!-- torso (suit red), leaning forward over the counter, toward the sink -->
-          <path d="M182 150 C 172 132, 160 116, 148 98 C 154 90, 166 88, 176 94 C 196 104, 212 124, 218 150 Z" fill="var(--suit-red)" />
-          <!-- shade (back side, dimension) -->
-          <path d="M176 94 C 196 104, 212 124, 218 150 L 205 150 C 202 130, 190 112, 174 100 Z" fill="var(--suit-red-dark)" opacity="0.5" />
-          <!-- web pattern on torso -->
-          <path d="M155 128 C 163 120, 173 116, 185 116 M158 112 C 166 120, 170 132, 168 142 M150 138 L176 122 M156 102 C 164 108, 168 116, 168 124"
-            stroke="var(--web)" stroke-width="1" fill="none" opacity="0.55" />
-          <!-- small chest emblem -->
-          <path d="M165 122 l3 -5 l3 5 l-3 4 z" fill="var(--web)" opacity="0.8" />
-
-          <!-- neck + mask, profile facing left, jutting forward over the sink -->
-          <path d="M152 92 L 140 80" stroke="var(--suit-red)" stroke-width="10" stroke-linecap="round" />
-          <circle cx="133" cy="70" r="16" fill="var(--suit-red)" />
-          <!-- mask web lines -->
-          <path d="M121 62 C 128 58, 138 58, 145 62 M124 56 C 130 64, 134 74, 132 82 M119 72 C 127 76, 137 76, 144 72"
-            stroke="var(--web)" stroke-width="1" fill="none" opacity="0.6" />
-          <!-- eye lens (angular, side profile) -->
-          <path d="M115 74 C 113 70, 117 65, 124 66 C 129 67, 130 72, 127 76 C 123 80, 117 79, 115 74 Z" fill="var(--lens)" />
-          <path d="M115 74 C 113 70, 117 65, 124 66 C 129 67, 130 72, 127 76 C 123 80, 117 79, 115 74 Z" stroke="var(--web)" stroke-width="1.4" fill="none" />
-
-          <!-- sweat drops (working fast, feeling the heat) -->
-          <path class="sweat sweat1" d="M119 52 C 117 52 115 55 116 58 C 117 60 120 60 121 58 C 122 55 121 52 119 52 Z" fill="var(--sweat)" />
-          <path class="sweat sweat2" d="M152 62 C 150 62 149 64 150 66 C 150 67 152 67 153 66 C 154 64 153 62 152 62 Z" fill="var(--sweat)" />
-          <g class="sweat-flick">
-            <circle cx="148" cy="52" r="2.4" fill="var(--sweat)" />
+        <!-- utensil glyphs at the four corners of the ring -->
+        <!-- outer <g> handles fixed position; inner .utensil <g> is scale-only so anime.js's
+             CSS transform animation never clobbers the placement. -->
+        <g transform="translate(101,101)">
+          <g class="utensil fork">
+            <rect x="-2.5" y="-2" width="5" height="20" rx="2" fill="var(--porcelain)" />
+            <rect x="-6" y="-20" width="2.4" height="18" rx="1" fill="var(--porcelain)" />
+            <rect x="-1.2" y="-20" width="2.4" height="18" rx="1" fill="var(--porcelain)" />
+            <rect x="3.6" y="-20" width="2.4" height="18" rx="1" fill="var(--porcelain)" />
           </g>
-
-          <!-- back arm (resting, bent at side) -->
-          <path d="M176 96 C 186 106, 192 118, 190 132" stroke="var(--suit-red)" stroke-width="13" stroke-linecap="round" fill="none" />
-          <path d="M190 132 C 189 140, 187 148, 183 152" stroke="var(--suit-red)" stroke-width="10" stroke-linecap="round" fill="none" />
-
-          <!-- front arm: web-lined sleeve + gloved hand scrubbing (animated) -->
-          <path d="M158 98 C 146 104, 136 110, 128 116" stroke="var(--suit-red)" stroke-width="13" stroke-linecap="round" fill="none" />
-          <path d="M152 100 C 144 105, 137 109, 130 113" stroke="var(--web)" stroke-width="1" fill="none" opacity="0.6" />
-          <circle cx="128" cy="116" r="7.5" fill="none" stroke="var(--porcelain)" stroke-width="2" opacity="0.4" />
-
-          <!-- motion lines behind the scrubbing hand -->
-          <g class="speed-lines">
-            <path d="M105 92 C 97 96, 91 100, 86 104" stroke="var(--porcelain)" stroke-width="1.6" stroke-linecap="round" fill="none" />
-            <path d="M113 100 C 105 104, 99 108, 94 112" stroke="var(--porcelain)" stroke-width="1.6" stroke-linecap="round" fill="none" />
-            <path d="M109 144 C 101 140, 95 136, 90 132" stroke="var(--porcelain)" stroke-width="1.6" stroke-linecap="round" fill="none" />
+        </g>
+        <g transform="translate(299,101)">
+          <g class="utensil spoon">
+            <rect x="-2.5" y="-2" width="5" height="20" rx="2" fill="var(--porcelain)" />
+            <ellipse cx="0" cy="-14" rx="7" ry="9" fill="var(--porcelain)" />
           </g>
-
-          <g class="forearm" style="transform-origin: 128px 116px;">
-            <path d="M128 116 C 118 122, 108 128, 100 134" stroke="var(--suit-red)" stroke-width="10" stroke-linecap="round" fill="none" />
-            <circle cx="97" cy="136" r="6.5" fill="var(--suit-red-dark)" />
-            <rect x="86" y="130" width="15" height="10" rx="3" fill="var(--amber)" transform="rotate(-18 93 135)" />
+        </g>
+        <g transform="translate(299,299)">
+          <g class="utensil plate">
+            <circle cx="0" cy="0" r="16" fill="none" stroke="var(--porcelain)" stroke-width="3" />
+            <circle cx="0" cy="0" r="9" fill="none" stroke="var(--porcelain)" stroke-width="1.6" opacity="0.7" />
+          </g>
+        </g>
+        <g transform="translate(101,299)">
+          <g class="utensil pot">
+            <rect x="-14" y="-8" width="28" height="16" rx="4" fill="var(--porcelain)" />
+            <rect x="-20" y="-2" width="6" height="3" rx="1.5" fill="var(--porcelain)" />
+            <rect x="14" y="-2" width="6" height="3" rx="1.5" fill="var(--porcelain)" />
           </g>
         </g>
 
-        <!-- suds -->
-        <g class="bubble b1"><circle cx="112" cy="128" r="3.5" fill="var(--porcelain)" /></g>
-        <g class="bubble b2"><circle cx="100" cy="120" r="2.6" fill="var(--porcelain)" /></g>
-        <g class="bubble b3"><circle cx="126" cy="116" r="3" fill="var(--porcelain)" /></g>
+        <!-- center plate-shaped scrub equalizer + diagonal trail, built at runtime -->
+        <g id="bars"></g>
+        <g id="dots"></g>
       </svg>
+
+      <!-- avatar of today's person, floating in the center of the plate.
+           Separate HTML layer (not SVG) so it gets its own nested 3D spin
+           independent of the plate's tilt, sharing the same perspective.
+           .avatar-mount handles static centering (untouched by anime.js);
+           .avatar-wrap is the only element anime.js animates rotateX on. -->
+      <div class="avatar-mount">
+        <div class="avatar-wrap">
+          <div class="avatar-spin">
+            <canvas class="avatar-canvas" id="avatar-canvas" hidden></canvas>
+            <span class="avatar-initial" id="avatar-initial">—</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <aside class="queue-rail">
@@ -129,6 +117,17 @@
     <p id="status-line"><span class="dot"></span><span id="status-text">connecting…</span></p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
   <script type="module" src="app.js"></script>
+  <script type="module" src="dial-animation.js"></script>
+  <script type="module" src="avatar-3d.js"></script>
 </body>
 </html>
