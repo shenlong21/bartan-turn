@@ -100,11 +100,17 @@ async function skipCurrentTurn() {
       const { index, date } = snap.data();
       const person = NAMES[index];
 
-      tx.set(doc(db, "skips", skipDocId(date, person)), {
-        date,
-        person,
-        ts: serverTimestamp(),
-      });
+      // Firestore rules only allow *creating* skip docs, not updating them
+      // (deliberately, so history can't be edited after the fact). Once
+      // everyone's been skipped once today, the doc for whoever the pointer
+      // lands on next already exists — writing to it again would be an
+      // "update" and get rejected. Only create it if it's genuinely new;
+      // still always advance the pointer either way.
+      const skipRef = doc(db, "skips", skipDocId(date, person));
+      const skipSnap = await tx.get(skipRef);
+      if (!skipSnap.exists()) {
+        tx.set(skipRef, { date, person, ts: serverTimestamp() });
+      }
 
       const newIndex = (index + 1) % NAMES.length;
       tx.set(pointerRef, { index: newIndex, date });
